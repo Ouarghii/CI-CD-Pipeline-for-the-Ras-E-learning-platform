@@ -4,7 +4,7 @@ pipeline {
     tools {
         nodejs 'Nodejs' 
     }
-    environnement {
+    environment {
         MONGODB_URI=credentials('Mongodb')
         TOKEN_KEY=credentials('Tokenkey')
         EMAIL=credentials('Email')
