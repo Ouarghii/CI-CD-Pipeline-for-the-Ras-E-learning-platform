@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'Nodejs' ,
-        // Use the tool name defined in Jenkins
+        nodejs 'Nodejs' 
     }
 
     stages {
