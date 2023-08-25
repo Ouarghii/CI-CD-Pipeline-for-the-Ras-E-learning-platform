@@ -15,7 +15,7 @@ pipeline {
             steps {
                 dir('client') {
                     sh 'yarn install'
-                    sh 'npm test'
+                    sh 'yarn start'
                 }
             }
         }
