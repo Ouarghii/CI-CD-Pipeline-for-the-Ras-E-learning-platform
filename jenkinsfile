@@ -37,5 +37,11 @@ pipeline {
 		        }
 	        }
         }
+        stage('Build Images') {
+	        steps {
+		        sh 'docker build -t raslen/CI:CD-app:client-latest client'
+		        sh 'docker build -t raslen/CI:CD-app:server-latest server'
+	        }
+        }
     }
 }
