@@ -18,11 +18,14 @@ pipeline {
             }
         }
         // Add more stages for building and deploying your project
-        stage('Clients Tests') {
+         stage('Run Frontend Tests') {
             steps {
-                dir('client'){
-                    sh 'npm install'
-                    sh 'npm test'
+                dir('client') {
+                    // Use the configured NodeJS installation
+                    withEnv(["PATH+NODEJS=${tool name: 'NodeJS', type: 'NodeJS'}"]) {
+                        sh 'npm install'
+                        sh 'npm test'
+                    }
                 }
             }
         }
