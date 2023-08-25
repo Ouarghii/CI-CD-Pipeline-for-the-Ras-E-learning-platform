@@ -1,31 +1,22 @@
 pipeline {
     agent any
 
+    environment {
+        // Use the correct tool name (Nodejs) that matches your Jenkins configuration
+        PATH+Nodejs = "${tool name: 'Nodejs', type: 'NodeJS'}/bin:${env.PATH}"
+    }
+
     stages {
         stage('Checkout') {
             steps {
-                checkout([$class: 'GitSCM',
-                          branches: [[name: '*/main']],  // Specify 'main' branch
-                          doGenerateSubmoduleConfigurations: false,
-                          extensions: [],
-                          userRemoteConfigs: [[
-                              url: 'https://github.com/Ouarghii/CI-CD-Pipeline-for-the-Ras-E-learning-platform.git',
-                              credentialsId: 'Raslen'
-                          ]],
-                          changelog: false,
-                          poll: false
-                        ])
+                checkout scm
             }
         }
-        // Add more stages for building and deploying your project
-         stage('Run Frontend Tests') {
+        stage('Run Frontend Tests') {
             steps {
                 dir('client') {
-                    // Use the configured NodeJS installation
-                     withEnv(["PATH+Nodejs=${tool name: 'Nodejs', type: 'NodeJS'}"]) {
-                        sh 'npm install'
-                        sh 'npm test'
-                    }
+                    sh 'npm install'
+                    sh 'npm test'
                 }
             }
         }
