@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs 'Nodejs' // Use the tool name defined in Jenkins
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -14,10 +10,12 @@ pipeline {
         stage('Run Frontend Tests') {
             steps {
                 dir('client') {
-                    sh 'yarn install'
-                    sh 'npm test'
+                    // Specify the full path to the Yarn executable
+                    bat 'C:\\Program Files (x86)\\Yarn\\bin\\yarn install'
+                    bat 'C:\\Program Files (x86)\\Yarn\\bin\\yarn test'
                 }
             }
         }
     }
 }
+
