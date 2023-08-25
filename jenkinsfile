@@ -11,7 +11,9 @@ pipeline {
                           userRemoteConfigs: [[
                               url: 'https://github.com/Ouarghii/CI-CD-Pipeline-for-the-Ras-E-learning-platform.git',
                               credentialsId: 'Raslen'
-                          ]]
+                          ]],
+                          changelog: false,
+                          poll: false
                         ])
             }
         }
