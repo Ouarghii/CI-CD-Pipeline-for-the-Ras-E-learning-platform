@@ -3,7 +3,7 @@ pipeline {
 
     tools {
         nodejs 'Nodejs' 
-        dockerTool 'Docker'
+        docker 'Docker'
     }
     environment {
         MONGODB_URI=credentials('Mongodb')
@@ -40,10 +40,8 @@ pipeline {
         }
         stage('Build Images') {
 	         steps {
-                script {
-                    def dockerHome = tool name: 'dockerTool', type: 'ToolType'
-                    sh "${dockerHome}/bin/docker build -t raslen/CI:CD-app:client-latest client"
-                  
+               script {
+                    sh 'docker build -t raslen/CI:CD-app:client-latest client'
                 }
             }
         }
