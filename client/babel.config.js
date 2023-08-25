@@ -1,7 +1,10 @@
 module.exports = {
     presets: [
-      '@babel/preset-env', // Transpile modern JavaScript syntax to older versions
-      '@babel/preset-react', // Transpile JSX syntax
+      "@babel/preset-env",
+      "@babel/preset-react"
     ],
-    plugins: [], // Add any additional Babel plugins here
+    plugins: [
+      "@babel/plugin-transform-modules-commonjs"
+    ]
   };
+  
