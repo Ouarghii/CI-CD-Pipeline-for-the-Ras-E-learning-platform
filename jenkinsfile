@@ -18,5 +18,13 @@ pipeline {
             }
         }
         // Add more stages for building and deploying your project
+        stage('Clients Tests') {
+            steps {
+                dir('client'){
+                    ssh 'npm install'
+                    sh 'npm test'
+                }
+            }
+        }
     }
 }
