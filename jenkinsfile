@@ -3,7 +3,6 @@ pipeline {
 
     tools {
         nodejs 'Nodejs'
-        dockerTool name: 'Docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
     }
     environment {
         MONGODB_URI=credentials('Mongodb')
@@ -39,13 +38,15 @@ pipeline {
 	        }
         }
         stage('Build Images') {
-	         steps {
+            steps {
                 script {
-                    def dockerHome = tool name: 'Docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
-                    sh "${dockerHome}/bin/docker build -t raslen/CI:CD-app:client-latest client"
-                }
+                    def dockerTool = tool name: 'Docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
+                    dockerTool.withDockerRegistry('') {
+                        sh "${dockerTool}/bin/docker build -t raslen/CI:CD-app:client-latest client"
+                        sh "${dockerTool}/bin/docker build -t raslen/CI:CD-app:server-latest server"
+                    }
+                }       
             }
-
         }
     }
 }
