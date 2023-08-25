@@ -22,7 +22,7 @@ pipeline {
             steps {
                 dir('client') {
                     // Use the configured NodeJS installation
-                    withEnv(["PATH+NODEJS=${tool name: 'NodeJS', type: 'NodeJS'}"]) {
+                     withEnv(["PATH+Nodejs=${tool name: 'Nodejs', type: 'NodeJS'}"]) {
                         sh 'npm install'
                         sh 'npm test'
                     }
