@@ -10,7 +10,7 @@ pipeline {
                           extensions: [],
                           userRemoteConfigs: [[
                               url: 'https://github.com/Ouarghii/CI-CD-Pipeline-for-the-Ras-E-learning-platform.git',
-                              credentialsId: 'your-credential-id'
+                              credentialsId: 'Raslen'
                           ]]
                         ])
             }
