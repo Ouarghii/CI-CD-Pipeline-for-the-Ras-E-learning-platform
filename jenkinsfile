@@ -4,8 +4,17 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                checkout([$class: 'GitSCM',
+                          branches: [[name: '*/main']],  // Specify 'main' branch
+                          doGenerateSubmoduleConfigurations: false,
+                          extensions: [],
+                          userRemoteConfigs: [[
+                              url: 'https://github.com/Ouarghii/CI-CD-Pipeline-for-the-Ras-E-learning-platform.git',
+                              credentialsId: 'your-credential-id'
+                          ]]
+                        ])
             }
         }
+        // Add more stages for building and deploying your project
     }
 }
