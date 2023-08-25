@@ -4,6 +4,12 @@ pipeline {
     tools {
         nodejs 'Nodejs' 
     }
+    environnement {
+        MONGODB_URI=credentials('Mongodb')
+        TOKEN_KEY=credentials('Tokenkey')
+        EMAIL=credentials('Email')
+        PASSWORD=credentials('Password')
+    }
 
     stages {
         stage('Checkout') {
@@ -18,6 +24,18 @@ pipeline {
                     sh 'yarn start'
                 }
             }
+        }
+        stage('Server Tests') {
+	        steps {
+		        dir('server') {
+			        sh 'npm install'
+			        sh 'export MONGODB_URI=$MONGODB_URI'
+			        sh 'export TOKEN_KEY=$TOKEN_KEY'
+			        sh 'export EMAIL=$EMAIL'
+			        sh 'export PASSWORD=$PASSWORD'
+			        sh 'npm test'
+		        }
+	        }
         }
     }
 }
