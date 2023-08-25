@@ -40,10 +40,12 @@ pipeline {
         }
         stage('Build Images') {
 	         steps {
-               script {
-                    sh 'docker build -t raslen/CI:CD-app:client-latest client'
+                script {
+                    def dockerTool = tool name: 'Docker', type: 'ToolType'
+                    sh "${dockerTool}/bin/docker build -t raslen/CI:CD-app:client-latest client"
                 }
             }
+
         }
     }
 }
