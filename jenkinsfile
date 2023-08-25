@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     environment {
-        // Use the correct tool name (Nodejs) that matches your Jenkins configuration
-        PATH+Nodejs = "${tool name: 'Nodejs', type: 'NodeJS'}/bin:${env.PATH}"
+        // Use the correct variable name (NODEJS_HOME) and PATH syntax
+        NODEJS_HOME = tool name: 'Nodejs', type: 'NodeJS'
+        PATH = "${NODEJS_HOME}/bin:${env.PATH}"
     }
 
     stages {
@@ -22,3 +23,4 @@ pipeline {
         }
     }
 }
+
