@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'Nodejs' 
-        docker 'Docker'
+        nodejs 'Nodejs'
+        dockerTool name: 'Docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
     }
     environment {
         MONGODB_URI=credentials('Mongodb')
@@ -41,8 +41,8 @@ pipeline {
         stage('Build Images') {
 	         steps {
                 script {
-                    def dockerTool = tool name: 'Docker', type: 'ToolType'
-                    sh "${dockerTool}/bin/docker build -t raslen/CI:CD-app:client-latest client"
+                    def dockerHome = tool name: 'Docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
+                    sh "${dockerHome}/bin/docker build -t raslen/CI:CD-app:client-latest client"
                 }
             }
 
