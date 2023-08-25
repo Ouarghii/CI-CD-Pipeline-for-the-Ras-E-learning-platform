@@ -38,16 +38,13 @@ pipeline {
 	        }
         }
         stage('Build Images') {
-    steps {
-        script {
-            def dockerTool = tool name: 'Docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
-            dockerTool.withDockerRegistry('') {
-                sh "${dockerTool}/bin/docker build -t raslen/CI:CD-app:client-latest client"
-                sh "${dockerTool}/bin/docker build -t raslen/CI:CD-app:server-latest server"
+            steps {
+                script {
+                    sh "docker build -t raslen/CI:CD-app:client-latest client"
+                    sh "docker build -t raslen/CI:CD-app:server-latest server"
+                }
             }
         }
-    }
-}
     }
 }
 
