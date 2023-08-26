@@ -25,29 +25,30 @@ pipeline {
             }
         }
         stage('Server Tests') {
-	        steps {
-		        dir('server') {
-			        sh 'npm install'
-			        sh 'export MONGODB_URI=$MONGODB_URI'
-			        sh 'export TOKEN_KEY=$TOKEN_KEY'
-			        sh 'export EMAIL=$EMAIL'
-			        sh 'export PASSWORD=$PASSWORD'
-			        sh 'npm test'
-		        }
-	        }
+            steps {
+                dir('server') {
+                    script {
+                        sh 'npm install'
+                        env.MONGODB_URI = credentials('Mongodb')
+                        env.TOKEN_KEY = credentials('Tokenkey')
+                        env.EMAIL = credentials('Email')
+                        env.PASSWORD = credentials('Password')
+                        sh 'npm test'
+                    }
+                }
+            }
         }
         stage('Build Images') {
-    steps {
-        script {
-            def dockerTool = tool name: 'Docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
-            echo "Docker Tool Path: ${dockerTool}"
-            sh "ls -la ${dockerTool}/bin" 
-            sh "${dockerTool}/bin/docker build -t raslen/ci:cd-app:client-latest client".toLowerCase()
+            steps {
+                script {
+                    def dockerTool = tool name: 'Docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
+                    echo "Docker Tool Path: ${dockerTool}"
+                    sh "ls -la ${dockerTool}/bin" 
+                    sh "${dockerTool}/bin/docker build -t raslen/ci:cd-app:client-latest client".toLowerCase()
+                }
+            }
         }
     }
 }
 
-        }
-    }
-}
 
