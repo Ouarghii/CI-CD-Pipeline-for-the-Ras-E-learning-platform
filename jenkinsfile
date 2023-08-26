@@ -21,7 +21,6 @@ pipeline {
             steps {
                 dir('client') {
                     sh 'yarn install'
-                    sh 'yarn start'
                 }
             }
         }
