@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        echo '"hello"'
+        sh 'checkout scm'
       }
     }
 
@@ -14,7 +14,7 @@ def npmHome = tool name: \'npm\', type: \'jenkins.plugins.nodejs.tools.NpmInstal
 
 env.PATH = "${nodejsHome}/bin:${npmHome}/bin:${env.PATH}"
 dir(\'server\') {
-    sh \'npm install\'
+    npm install
 }
 '''
       }
