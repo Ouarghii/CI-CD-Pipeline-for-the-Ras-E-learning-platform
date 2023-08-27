@@ -8,18 +8,19 @@ pipeline {
         }
 
         stage('Install Backend Dependencies') {
-            steps {
-                script {
-                    def nodejsHome = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
-                    def npmHome = tool name: 'npm', type: 'jenkins.plugins.nodejs.tools.NpmInstallation'
+    steps {
+        script {
+            def nodejsHome = tool name: 'nodejs', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+            def npmHome = tool name: 'npm', type: 'jenkins.plugins.nodejs.tools.NpmInstallation'
 
-                    env.PATH = "${nodejsHome}/bin:${npmHome}/bin:${env.PATH}"
-                    dir('server') {
-                        sh 'npm install'
-                    }
-                }
+            env.PATH = "${nodejsHome}/bin:${npmHome}/bin:${env.PATH}"
+            dir('server') {
+                sh 'npm install'
             }
         }
+    }
+}
+
 
         stage('Build and Test Backend') {
             steps {
@@ -30,20 +31,19 @@ pipeline {
             }
         }
 
-        stage('Install Frontend Dependencies') {
-            steps {
-                script {
-                    def nodejsHome = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
-                    def npmHome = tool name: 'npm', type: 'jenkins.plugins.nodejs.tools.NpmInstallation'
+       stage('Install Frontend Dependencies') {
+    steps {
+        script {
+            def nodejsHome = tool name: 'nodejs', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+            def npmHome = tool name: 'npm', type: 'jenkins.plugins.nodejs.tools.NpmInstallation'
 
-                    env.PATH = "${nodejsHome}/bin:${npmHome}/bin:${env.PATH}"
-                    dir('client') {
-                        sh 'npm install'
-                    }
-                }
+            env.PATH = "${nodejsHome}/bin:${npmHome}/bin:${env.PATH}"
+            dir('client') {
+                sh 'npm install'
             }
         }
-
+    }
+}
         stage('Build and Test Frontend') {
             steps {
                 dir('client') {
