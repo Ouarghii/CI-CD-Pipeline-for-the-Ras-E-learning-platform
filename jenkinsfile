@@ -25,7 +25,7 @@ stage('Build and Test Backend') {
         dir('server') {
             sh 'npm install'       
             sh 'npm install -g nodemon' 
-  
+
             sh 'npm test'  
         }
     }
@@ -47,7 +47,6 @@ stage('Install Frontend Dependencies') {
             steps {
                 dir('client') {
                     sh 'npm run build'
-               
                 }
             }
         }
