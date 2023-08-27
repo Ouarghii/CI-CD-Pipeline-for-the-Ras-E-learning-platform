@@ -23,7 +23,7 @@ stage('Install Backend Dependencies') {
         stage('Build and Test Backend') {
             steps {
                 dir('server') {
-                    sh 'npm run build'
+                    sh 'nmp start'
                     sh 'npm test'
                 }
             }
