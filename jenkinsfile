@@ -38,7 +38,7 @@ stage('Install Frontend Dependencies') {
             def nodejsHome = tool name: 'NodeJS 20.5.1', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
             env.PATH = "${nodejsHome}/bin:${env.PATH}"
             dir('client') {
-                sh 'npm install'
+                sh 'yarn install'
             }
         }
     }
