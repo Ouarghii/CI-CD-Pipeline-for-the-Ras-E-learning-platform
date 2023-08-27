@@ -1,52 +1,64 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs 'Nodejs'
-    }
-    environment {
-        MONGODB_URI=credentials('Mongodb')
-        TOKEN_KEY=credentials('Tokenkey')
-        EMAIL=credentials('Email')
-        PASSWORD=credentials('Password')
-    }
-
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
-        stage('Run Frontend Tests') {
+
+        stage('Install Backend Dependencies') {
             steps {
-                dir('client') {
-                    sh 'yarn install'
-                }
-            }
-        }
-        stage('Server Tests') {
-            steps {
-                dir('server') {
-                    script {
+                script {
+                    def nodejsHome = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+                    def npmHome = tool name: 'npm', type: 'jenkins.plugins.nodejs.tools.NpmInstallation'
+
+                    env.PATH = "${nodejsHome}/bin:${npmHome}/bin:${env.PATH}"
+                    dir('server') {
                         sh 'npm install'
-                        env.MONGODB_URI = credentials('Mongodb')
-                        env.TOKEN_KEY = credentials('Tokenkey')
-                        env.EMAIL = credentials('Email')
-                        env.PASSWORD = credentials('Password')
-                        sh 'npm test'
                     }
                 }
             }
         }
-        stage('Build Images') {
+
+        stage('Build and Test Backend') {
+            steps {
+                dir('server') {
+                    sh 'npm run build'
+                    sh 'npm test'
+                }
+            }
+        }
+
+        stage('Install Frontend Dependencies') {
             steps {
                 script {
-                    def dockerTool = tool name: 'Docker', type: 'org.jenkinsci.plugins.docker.commons.tools.DockerTool'
-                    sh "${dockerTool} build -t raslen/ci:cd-app:client-latest client"
+                    def nodejsHome = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+                    def npmHome = tool name: 'npm', type: 'jenkins.plugins.nodejs.tools.NpmInstallation'
+
+                    env.PATH = "${nodejsHome}/bin:${npmHome}/bin:${env.PATH}"
+                    dir('client') {
+                        sh 'npm install'
+                    }
                 }
+            }
+        }
+
+        stage('Build and Test Frontend') {
+            steps {
+                dir('client') {
+                    sh 'npm run build'
+                    sh 'npm test'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploy stage'
             }
         }
     }
 }
-
 
