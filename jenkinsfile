@@ -10,7 +10,7 @@ pipeline {
         stage('Install Backend Dependencies') {
     steps {
         script {
-            def nodejsHome = tool name: 'nodejs', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+            def nodejsHome = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
             def npmHome = tool name: 'npm', type: 'jenkins.plugins.nodejs.tools.NpmInstallation'
 
             env.PATH = "${nodejsHome}/bin:${npmHome}/bin:${env.PATH}"
@@ -34,7 +34,7 @@ pipeline {
        stage('Install Frontend Dependencies') {
     steps {
         script {
-            def nodejsHome = tool name: 'nodejs', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
+            def nodejsHome = tool name: 'NodeJS', type: 'jenkins.plugins.nodejs.tools.NodeJSInstallation'
             def npmHome = tool name: 'npm', type: 'jenkins.plugins.nodejs.tools.NpmInstallation'
 
             env.PATH = "${nodejsHome}/bin:${npmHome}/bin:${env.PATH}"
